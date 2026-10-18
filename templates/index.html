@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>X Video Downloader</title>
+  <meta name="description" content="Download videos and GIFs from Twitter / X posts as MP4.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='6' fill='%234f46e5'/><path d='M12 6v9m0 0-4-4m4 4 4-4M7 18h10' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M12 5v10m0 0-4-4m4 4 4-4M6 19h12"/></svg>
+      </div>
+      <h1>X Video Downloader</h1>
+      <p class="lede">Paste a link to a Twitter / X post and save its video or GIF as an MP4.</p>
+    </header>
+
+    <form id="form" class="search" autocomplete="off" novalidate>
+      <label for="url" class="sr-only">Post link</label>
+      <div class="field">
+        <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></svg>
+        <input id="url" name="url" type="url" inputmode="url" spellcheck="false"
+               placeholder="https://x.com/username/status/1234567890" required>
+        <button type="button" id="paste" class="ghost" hidden>Paste</button>
+        <button type="button" id="clear" class="icon-btn" aria-label="Clear" hidden>
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <button type="submit" id="submit" class="primary">
+        <span class="spinner" aria-hidden="true"></span>
+        <span class="label">Download</span>
+      </button>
+    </form>
+
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <section id="results" aria-live="polite"></section>
+
+    <section class="steps" id="steps">
+      <h2>How it works</h2>
+      <ol>
+        <li><span class="num">1</span><div><strong>Copy the link</strong><p>On the post, tap Share → Copy link.</p></div></li>
+        <li><span class="num">2</span><div><strong>Paste it above</strong><p>Hit Download, or just paste. It starts automatically.</p></div></li>
+        <li><span class="num">3</span><div><strong>Pick a quality</strong><p>Choose a resolution and the MP4 saves to your device.</p></div></li>
+      </ol>
+    </section>
+
+    <footer class="foot">
+      Only works with public posts. Download content you have the right to use, and respect creators' copyright.
+    </footer>
+  </main>
+
+  <template id="tpl-result">
+    <article class="card">
+      <div class="author">
+        <img class="avatar" alt="" referrerpolicy="no-referrer" hidden>
+        <div class="who">
+          <span class="name"></span>
+          <a class="handle" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <a class="open-post" target="_blank" rel="noopener noreferrer">View post ↗</a>
+      </div>
+      <p class="text"></p>
+      <div class="media-list"></div>
+    </article>
+  </template>
+
+  <template id="tpl-media">
+    <div class="media">
+      <button type="button" class="thumb" aria-label="Preview video">
+        <img alt="" referrerpolicy="no-referrer">
+        <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="badge kind" hidden>GIF</span>
+        <span class="badge duration" hidden></span>
+      </button>
+      <div class="options">
+        <div class="options-head"><span class="media-title">Video</span><span class="hint">Choose a quality</span></div>
+        <ul class="variants"></ul>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-variant">
+    <li class="variant">
+      <div class="q">
+        <span class="res"></span>
+        <span class="meta"></span>
+      </div>
+      <div class="actions">
+        <button type="button" class="ghost copy">Copy link</button>
+        <a class="primary sm dl" download>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg>
+          <span>MP4</span>
+        </a>
+      </div>
+    </li>
+  </template>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

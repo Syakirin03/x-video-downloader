@@ -1,0 +1,24 @@
+# Python environment and caches (they contain absolute paths with your Windows username)
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+
+# Secrets: an X cookies file gives full access to your account
+*cookies*.txt
+*.cookies
+.env
+.env.*
+
+# Downloaded media
+*.mp4
+*.m4a
+*.webm
+
+# Editor and OS files
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+*.log
